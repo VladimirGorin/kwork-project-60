@@ -236,7 +236,9 @@ async def send_start_message(chat_id):
         ''').fetchone()
     if start_message is not None and start_message[2] == 'Active':
         photo, text, status = start_message
-        await bot.send_photo(chat_id, photo)
+        if len(photo):
+            await bot.send_photo(chat_id, photo)
+
         await bot.send_message(chat_id, text, reply_markup=types.ReplyKeyboardRemove())
     else:
         await bot.send_message(chat_id, 'Главное меню', reply_markup=types.ReplyKeyboardRemove())
